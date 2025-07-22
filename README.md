@@ -1,12 +1,19 @@
-# React + Vite
+# CTD Todo-list App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Description
 
-Currently, two official plugins are available:
+This app is a barebones React todo-list with a name and 3 items. It uses Vite, Eslint, and Prettier for development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation Instructions
 
-## Expanding the ESLint configuration
+Open a terminal and navigate to a folder of your choosing  
+Run `git clone https://github.com/mrysan/todo-list`  
+navigate to the directory with `cd todo-list`  
+Run Command: `npm install`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How To Run Development Server
+
+Start the server with: `npm run dev`  
+Take note of the port the server boots up on, typically 5173  
+Open Your Browser  
+Enter: `http://localhost:5173` (Or the port displayed)
