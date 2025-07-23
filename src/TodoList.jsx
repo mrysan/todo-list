@@ -1,6 +1,3 @@
-{
-  /*extract from TodoList.jsx*/
-}
 function TodoList() {
   const todos = [
     { id: 1, title: 'review resource' },

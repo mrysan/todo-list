@@ -1,11 +1,11 @@
-function ToDoForm() {
+function TodoForm() {
   return (
     <>
-      <label htmlFor="toDoTitle">toDo</label>
-      <input type="text" id="toDoTitlte"></input>
-      <button>Add ToDo</button>
+      <label htmlFor="todoTitle">toDo</label>
+      <input type="text" id="todoTitlte"></input>
+      <button type="submit">Add ToDo</button>
     </>
   );
 }
 
-export default ToDoForm;
+export default TodoForm;
