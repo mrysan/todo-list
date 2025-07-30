@@ -9,7 +9,7 @@ function TodoList() {
   return (
     <ul>
       {todos.map((todo) => (
-        <TodoListItem key={todo.id} item={{ id: todo.id, title: todo.title }} />
+        <TodoListItem key={todo.id} item={{ title: todo.title }} />
       ))}
     </ul>
   );
