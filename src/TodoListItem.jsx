@@ -1,5 +1,5 @@
-function TodoListItem({ item }) {
-  return <li>{item.title}</li>;
+function TodoListItem({ todo }) {
+  return <li>{todo}</li>;
 }
 
 export default TodoListItem;
