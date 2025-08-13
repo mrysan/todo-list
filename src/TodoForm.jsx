@@ -1,14 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 function TodoForm({ onAddTodo }) {
   const todoTitleInput = useRef('');
+  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
 
   function handleAddTodo(event) {
     // prevents page from refreshing when user clicks add todo btn
     event.preventDefault();
-    const title = event.target.title.value;
-    onAddTodo(title);
-    event.target.title.value = '';
+    onAddTodo(workingTodoTitle);
+    setWorkingTodoTitle('');
     todoTitleInput.current.focus();
   }
 
@@ -16,12 +16,18 @@ function TodoForm({ onAddTodo }) {
     <form onSubmit={handleAddTodo}>
       <label htmlFor="todoTitle">toDo</label>
       <input
+        value={workingTodoTitle}
         type="text"
         id="todoTitlte"
         name="title"
         ref={todoTitleInput}
+        onChange={(event) => {
+          setWorkingTodoTitle(event.target.value);
+        }}
       ></input>
-      <button type="submit">Add ToDo</button>
+      <button type="submit" disabled={workingTodoTitle === ''}>
+        Add Todo
+      </button>
     </form>
   );
 }
