@@ -21,7 +21,8 @@ function App() {
       try {
         const resp = await fetch(url, options);
         if (!resp.ok) {
-          throw Error(resp.message);
+          console.log(resp);
+          throw Error(resp.status); // resp.message does not exist
         }
         const response = await resp.json();
         const records = response.records.map((record) => {
@@ -36,7 +37,7 @@ function App() {
         });
         setTodoList(records);
       } catch (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(error.toString());
       } finally {
         setIsloading(false);
       }
@@ -71,6 +72,10 @@ function App() {
     setTodoList(updatedTodos);
   }
 
+  function dismissErrorMessage() {
+    setErrorMessage('');
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
@@ -82,6 +87,15 @@ function App() {
         onUpdateTodo={updateTodo}
         isLoading={isLoading}
       />
+      {errorMessage.length > 0 ? (
+        <div>
+          <hr />
+          <p>{errorMessage}</p>
+          <button type="button" onClick={dismissErrorMessage}>
+            Dismiss
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
