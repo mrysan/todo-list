@@ -7,6 +7,7 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
   const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
@@ -45,10 +46,50 @@ function App() {
     fetchTodos();
   }, []); // useEffect
 
-  function addTodo(title) {
-    const newTodo = { title: title, id: Date.now(), isCompleted: false };
-    setTodoList([...todoList, newTodo]);
-  }
+  const addTodo = async (newTodo) => {
+    const payload = {
+      records: [
+        {
+          fields: {
+            title: newTodo, // has to be newTodo because its a string
+            isCompleted: false, // false because its a brand new todo - it can't be anything else
+          },
+        },
+      ],
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      setIsSaving(true);
+      const resp = await fetch(url, options);
+      if (!resp.ok) {
+        throw Error(resp.status);
+      }
+      const { records } = await resp.json();
+
+      const savedTodo = {
+        id: records[0].id,
+        ...records[0].fields,
+      };
+      if (!records[0].fields.isCompleted) {
+        savedTodo.isCompleted = false;
+      }
+
+      setTodoList([...todoList, savedTodo]);
+    } catch (error) {
+      console.log(error.toString());
+      setErrorMessage(error.toString());
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   function completeTodo(id) {
     const updatedTodos = todoList.map((todo) => {
@@ -79,7 +120,7 @@ function App() {
   return (
     <div>
       <h1>Todo List</h1>
-      <TodoForm onAddTodo={addTodo} />
+      <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
 
       <TodoList
         todoList={todoList}
