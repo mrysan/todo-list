@@ -22,7 +22,6 @@ function App() {
       try {
         const resp = await fetch(url, options);
         if (!resp.ok) {
-          console.log(resp);
           throw Error(resp.status); // resp.message does not exist
         }
         const response = await resp.json();
@@ -31,11 +30,12 @@ function App() {
             id: record.id,
             ...record.fields,
           };
-          if (!record.isCompleted) {
+          if (!record.fields.isCompleted) {
             todo.isCompleted = false;
           }
           return todo;
         });
+        console.log(records);
         setTodoList(records);
       } catch (error) {
         setErrorMessage(error.toString());
@@ -91,27 +91,100 @@ function App() {
     }
   };
 
-  function completeTodo(id) {
+  const completeTodo = async (id) => {
+    // update Locally FIRST - optimistic approach
     const updatedTodos = todoList.map((todo) => {
       if (todo.id == id) {
         return { ...todo, isCompleted: true };
       }
       return todo;
     });
-
     setTodoList(updatedTodos);
-  }
 
-  function updateTodo(editedTodo) {
+    // find todo that was completed by id
+    const originalTodo = todoList.find((todo) => todo.id === id);
+    const payload = {
+      records: [
+        {
+          id: id,
+          fields: {
+            title: originalTodo.title,
+            isCompleted: true,
+          },
+        },
+      ],
+    };
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      setIsSaving(true);
+      const resp = await fetch(url, options);
+      if (!resp.ok) {
+        throw Error(resp.status);
+      }
+    } catch (error) {
+      console.log(error.toString());
+      setErrorMessage(`${error.message}. Reverting todo...`);
+      const revertedTodos = [...todoList, originalTodo];
+      setTodoList([...revertedTodos]);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const updateTodo = async (editedTodo) => {
+    // update locally FIRST - optimistic approach
     const updatedTodos = todoList.map((todo) => {
       if (todo.id == editedTodo.id) {
         return { ...editedTodo };
       }
       return todo;
     });
-
     setTodoList(updatedTodos);
-  }
+
+    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+    const payload = {
+      records: [
+        {
+          id: editedTodo.id,
+          fields: {
+            title: editedTodo.title,
+            isCompleted: editedTodo.isCompleted,
+          },
+        },
+      ],
+    };
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      setIsSaving(true);
+      const resp = await fetch(url, options);
+      if (!resp.ok) {
+        throw Error(resp.status);
+      }
+    } catch (error) {
+      console.log(error.toString());
+      setErrorMessage(`${error.message}. Reverting todo...`);
+      const revertedTodos = [...todoList, originalTodo];
+      setTodoList([...revertedTodos]);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   function dismissErrorMessage() {
     setErrorMessage('');
