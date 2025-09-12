@@ -6,9 +6,13 @@ import { useState, useEffect } from 'react';
 const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
 const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
-const encodeUrl = ({ sortField, sortDirection }) => {
+const encodeUrl = ({ sortField, sortDirection, queryString }) => {
+  let searchQuery = `${queryString}`;
   let sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
-  return encodeURI(`${url}?${sortQuery}`);
+  if (searchQuery) {
+    searchQuery = `&filterByFormula=SEARCH("${queryString}",+title)`;
+  }
+  return encodeURI(`${url}?${sortQuery}${searchQuery}`);
 };
 
 function App() {
@@ -16,8 +20,9 @@ function App() {
   const [isLoading, setIsloading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-  const [sortField, setSortFields] = useState('createdTime');
-  const [sortDirection, setSortDirection] = useState('desc');
+  const [sortField, setSortField] = useState('createdTime');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [queryString, setQueryString] = useState('');
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -29,7 +34,7 @@ function App() {
 
       try {
         const resp = await fetch(
-          encodeUrl({ sortField, sortDirection }),
+          encodeUrl({ sortField, sortDirection, queryString }),
           options
         );
         if (!resp.ok) {
@@ -46,7 +51,6 @@ function App() {
           }
           return todo;
         });
-        console.log(records);
         setTodoList(records);
       } catch (error) {
         setErrorMessage(error.toString());
@@ -55,7 +59,7 @@ function App() {
       }
     };
     fetchTodos();
-  }, [sortField, sortDirection]); // useEffect
+  }, [sortField, sortDirection, queryString]); // useEffect
 
   const addTodo = async (newTodo) => {
     const payload = {
@@ -80,7 +84,7 @@ function App() {
     try {
       setIsSaving(true);
       const resp = await fetch(
-        encodeUrl({ sortField, sortDirection }),
+        encodeUrl({ sortField, sortDirection, queryString }),
         options
       );
       if (!resp.ok) {
@@ -140,7 +144,7 @@ function App() {
     try {
       setIsSaving(true);
       const resp = await fetch(
-        encodeUrl({ sortField, sortDirection }),
+        encodeUrl({ sortField, sortDirection, queryString }),
         options
       );
       if (!resp.ok) {
@@ -190,7 +194,7 @@ function App() {
     try {
       setIsSaving(true);
       const resp = await fetch(
-        encodeUrl({ sortField, sortDirection }),
+        encodeUrl({ sortField, sortDirection, queryString }),
         options
       );
       if (!resp.ok) {
@@ -231,7 +235,14 @@ function App() {
         </div>
       ) : null}
       <hr />
-      <TodosViewForm />
+      <TodosViewForm
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+        sortField={sortField}
+        setSortField={setSortField}
+        queryString={queryString}
+        setQueryString={setQueryString}
+      />
     </div>
   );
 }
