@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import { useEffect, useState } from 'react';
 
 function TodosViewForm({
   sortDirection,
@@ -8,20 +8,18 @@ function TodosViewForm({
   queryString,
   setQueryString,
 }) {
-
   const [localQueryString, setLocalQueryString] = useState(queryString);
 
-  useEffect(() =>{
-    const debounce = setTimeout(()=>{
+  useEffect(() => {
+    const debounce = setTimeout(() => {
       setQueryString(localQueryString);
-    },500)
+    }, 500);
 
-    return ()=>{
+    return () => {
       // if a user types, it cancels the existing 500ms timeout
       clearTimeout(debounce);
-    }
-    
-  },[localQueryString,setLocalQueryString])
+    };
+  }, [localQueryString, setQueryString]);
 
   function preventRefresh(event) {
     event.preventDefault();
