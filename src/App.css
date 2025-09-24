@@ -1,0 +1,49 @@
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: #2d2d2d;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+}
+
+label {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  color: #2d2d2d;
+}
+
+ul {
+  font-family: 'Nunito', sans-serif;
+}
+
+body,
+#root {
+  background-color: #fdfdfe;
+}
+
+button {
+  border: solid transparent;
+  border-radius: 16px;
+  color: #fffdf6;
+  background-color: #ff6b6b;
+  cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: #e85a5a;
+}
+
+input[type='text'] {
+  width: 275px;
+  height: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-right: 10px;
+  margin-left: 10px;
+  color: #ff6b6b;
+  font-family: 'Inter', sans-serif;
+}
