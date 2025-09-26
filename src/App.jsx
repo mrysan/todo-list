@@ -1,11 +1,11 @@
 import './App.css';
+import styles from './App.module.css';
 import TodoList from './features/TodoList/TodoList.jsx';
 import TodoForm from './features/TodoForm.jsx';
 import TodosViewForm from './features/TodosViewForm.jsx';
 import { useState, useEffect, useCallback } from 'react';
 const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
 const token = `Bearer ${import.meta.env.VITE_PAT}`;
-
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -16,15 +16,14 @@ function App() {
   const [sortDirection, setSortDirection] = useState('asc');
   const [queryString, setQueryString] = useState('');
 
-
-  const encodeUrl = useCallback(()=>{
+  const encodeUrl = useCallback(() => {
     let searchQuery = `${queryString}`;
     let sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
     if (searchQuery) {
       searchQuery = `&filterByFormula=SEARCH("${queryString}",+title)`;
     }
     return encodeURI(`${url}?${sortQuery}${searchQuery}`);
-  },[sortField, sortDirection, queryString ])
+  }, [sortField, sortDirection, queryString]);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -35,10 +34,7 @@ function App() {
       };
 
       try {
-        const resp = await fetch(
-          encodeUrl(),
-          options
-        );
+        const resp = await fetch(encodeUrl(), options);
         if (!resp.ok) {
           throw Error(resp.status); // resp.message does not exist
         }
@@ -85,10 +81,7 @@ function App() {
 
     try {
       setIsSaving(true);
-      const resp = await fetch(
-        encodeUrl(),
-        options
-      );
+      const resp = await fetch(encodeUrl(), options);
       if (!resp.ok) {
         throw Error(resp.status);
       }
@@ -145,10 +138,7 @@ function App() {
 
     try {
       setIsSaving(true);
-      const resp = await fetch(
-        encodeUrl(),
-        options
-      );
+      const resp = await fetch(encodeUrl(), options);
       if (!resp.ok) {
         throw Error(resp.status);
       }
@@ -195,10 +185,7 @@ function App() {
 
     try {
       setIsSaving(true);
-      const resp = await fetch(
-        encodeUrl(),
-        options
-      );
+      const resp = await fetch(encodeUrl(), options);
       if (!resp.ok) {
         throw Error(resp.status);
       }
@@ -217,34 +204,39 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
+    <div className={styles.appContainer}>
+      <div className={styles.header}>
+        <h1>Todo List</h1>
+      </div>
+      <div class={styles.todoComponents}>
+        <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
 
-      <TodoList
-        todoList={todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-        isLoading={isLoading}
-      />
-      {errorMessage.length > 0 ? (
-        <div>
-          <hr />
-          <p>{errorMessage}</p>
-          <button type="button" onClick={dismissErrorMessage}>
-            Dismiss
-          </button>
-        </div>
-      ) : null}
-      <hr />
-      <TodosViewForm
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        sortField={sortField}
-        setSortField={setSortField}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+        <TodoList
+          todoList={todoList}
+          onCompleteTodo={completeTodo}
+          onUpdateTodo={updateTodo}
+          isLoading={isLoading}
+        />
+
+        {errorMessage.length > 0 ? (
+          <div className={styles.error}>
+            <p>{errorMessage}</p>
+            <button type="button" onClick={dismissErrorMessage}>
+              Dismiss
+            </button>
+          </div>
+        ) : null}
+
+        <hr />
+        <TodosViewForm
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
+          sortField={sortField}
+          setSortField={setSortField}
+          queryString={queryString}
+          setQueryString={setQueryString}
+        />
+      </div>
     </div>
   );
 }

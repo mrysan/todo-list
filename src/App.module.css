@@ -1,0 +1,35 @@
+.appContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /* height: 50vh; set to half the page */
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.error {
+  justify-content: space-between;
+  display: flex;
+  border: 3px solid red;
+  align-content: center;
+  padding: 2px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: red;
+}
+
+/* used to left align all components */
+.todoComponents {
+}
+
+/* select all items that are children of the main container  */
+.appContainer > form {
+}
+
+.header {
+  font-family: 'Montserrat', sans-serif;
+  color: #2d2d2d;
+}
+.todoForm {
+}

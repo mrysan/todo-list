@@ -1,0 +1,15 @@
+.checkBox {
+  margin-left: 2px;
+  transform: scale(1.35); /*increase size of checkbox */
+  margin-right: 5px;
+  box-shadow: 5px red;
+}
+.checkBox:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px #ff6b6b; /* glow effect */
+}
+
+.listItem {
+  padding-bottom: 5px;
+  font-size: 18px;
+}

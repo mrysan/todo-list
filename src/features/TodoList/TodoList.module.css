@@ -1,0 +1,6 @@
+/* remove bullet and extra space from list item  */
+.itemList {
+  padding: 0px;
+  list-style-type: none;
+  margin-left: 0px;
+}
