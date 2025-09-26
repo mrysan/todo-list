@@ -1,11 +1,10 @@
 .appContainer {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
+  width: 500px;
   /* height: 50vh; set to half the page */
   align-items: center;
-  align-content: center;
-  justify-content: space-between;
+  margin: 0 auto;
 }
 
 .error {
@@ -19,17 +18,16 @@
   color: red;
 }
 
-/* used to left align all components */
-.todoComponents {
-}
-
-/* select all items that are children of the main container  */
-.appContainer > form {
-}
-
 .header {
   font-family: 'Montserrat', sans-serif;
   color: #2d2d2d;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  align-content: center;
+  margin: 0 auto;
 }
-.todoForm {
+
+.header > img {
+  width: 45px;
 }

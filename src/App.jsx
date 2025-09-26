@@ -206,6 +206,7 @@ function App() {
   return (
     <div className={styles.appContainer}>
       <div className={styles.header}>
+        <img src="./public/favicon.svg" alt="todo-icon" />
         <h1>Todo List</h1>
       </div>
       <div className={styles.todoComponents}>
