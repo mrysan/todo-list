@@ -29,7 +29,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   }, [todo]);
 
   return (
-    <li class={styles.listItem}>
+    <li className={styles.listItem}>
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
@@ -45,7 +45,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
           <>
             <label>
               <input
-                class={styles.checkBox}
+                className={styles.checkBox}
                 type="checkbox"
                 id={`checkbox${todo.id}`}
                 checked={todo.isCompleted}

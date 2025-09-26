@@ -208,7 +208,7 @@ function App() {
       <div className={styles.header}>
         <h1>Todo List</h1>
       </div>
-      <div class={styles.todoComponents}>
+      <div className={styles.todoComponents}>
         <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
 
         <TodoList
