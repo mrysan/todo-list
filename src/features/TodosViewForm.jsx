@@ -2,11 +2,21 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledForm = styled.form``;
-const StyledInput = styled.input``;
+const StyledInput = styled.input`
+  width: 100%;
+`;
 const StyledButtom = styled.button``;
-const StyledLabel = styled.label``;
+const StyledLabel = styled.label`
+  font-size: 20px;
+`;
 const StyledOption = styled.option``;
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 10px;
+`;
 const StyledSelect = styled.select`
   width: 115px;
   text-align: center;
@@ -45,7 +55,7 @@ function TodosViewForm({
     <>
       <StyledForm onSubmit={preventRefresh}>
         <StyledDiv>
-          <StyledLabel>Search Todos</StyledLabel>
+          <StyledLabel>Search:</StyledLabel>
           <StyledInput
             type="text"
             value={localQueryString}

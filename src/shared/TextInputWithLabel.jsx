@@ -4,7 +4,10 @@ const StyledLabel = styled.label`
   font-size: 20px;
   margin: 0px;
 `;
-const StyledInput = styled.input``;
+const StyledInput = styled.input`
+  width: 100%;
+  margin-left: 0px;
+`;
 
 function TextInputWithLabel({ elementId, labelText, onChange, ref, value }) {
   return (
