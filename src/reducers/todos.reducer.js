@@ -55,7 +55,7 @@ function reducer(state = initialState, action) {
     case actions.setLoadError: {
       return {
         ...state,
-        errorMessage: action.error.message,
+        errorMessage: `Error: ${action.error}`,
         isLoading: false,
       };
     }
@@ -98,13 +98,12 @@ function reducer(state = initialState, action) {
       });
 
       const updatedState = {
-        /// unsure if destructing this correctly...
         ...state,
         todoList: [...updatedTodos],
       };
 
       if (action.error) {
-        updatedState.errorMessage = action.error.message;
+        updatedState.errorMessage = action.error;
       }
 
       return {
@@ -124,24 +123,25 @@ function reducer(state = initialState, action) {
         todoList: [...updatedTodos],
       };
     }
+    // wrote seperately from updateTodo as I wanted there to be a unique reverting message
     case actions.revertTodo: {
+      // find original todo by id and revert it
       const updatedTodos = state.todoList.map((todo) => {
-        if (todo.id == action.editedTodo.id) {
-          return { ...action.editedTodo };
+        if (todo.id == action.originalTodo.id) {
+          return { ...action.originalTodo };
         }
         return todo;
       });
 
       const updatedState = {
-        /// unsure if destructing this correctly...
         ...state,
         todoList: [...updatedTodos],
+        errorMessage: `${action.error}. Reverting todo...`,
       };
 
-      if (action.error) {
-        updatedState.errorMessage = action.error.message;
-      }
-      break;
+      return {
+        ...updatedState,
+      };
     }
 
     case actions.clearError: {
