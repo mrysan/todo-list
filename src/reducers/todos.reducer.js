@@ -31,55 +31,126 @@ function reducer(state = initialState, action) {
     case actions.fetchTodos: {
       return {
         ...state,
+        isLoading: true,
       };
     }
     case actions.loadTodos: {
+      const records = action.records.map((record) => {
+        const todo = {
+          id: record.id,
+          ...record.fields,
+        };
+        if (!record.fields.isCompleted) {
+          todo.isCompleted = false;
+        }
+        return todo;
+      });
+
       return {
         ...state,
+        todoList: records,
+        isLoading: false,
       };
     }
     case actions.setLoadError: {
       return {
         ...state,
+        errorMessage: action.error.message,
+        isLoading: false,
       };
     }
 
     case actions.startRequest: {
       return {
         ...state,
+        isSaving: true,
       };
     }
     case actions.addTodo: {
+      const savedTodo = {
+        id: action.records[0].id,
+        ...action.records[0].fields,
+      };
+      // added in case airTable omits it
+      if (!action.records[0].fields.isCompleted) {
+        savedTodo.isCompleted = false;
+      }
+
       return {
         ...state,
+        isSaving: false,
+        todoList: [...state.todoList, savedTodo],
       };
     }
     case actions.endRequest: {
       return {
         ...state,
+        isLoading: false,
+        isSaving: false,
       };
     }
     case actions.updateTodo: {
-      return {
+      const updatedTodos = state.todoList.map((todo) => {
+        if (todo.id == action.editedTodo.id) {
+          return { ...action.editedTodo };
+        }
+        return todo;
+      });
+
+      const updatedState = {
+        /// unsure if destructing this correctly...
         ...state,
+        todoList: [...updatedTodos],
+      };
+
+      if (action.error) {
+        updatedState.errorMessage = action.error.message;
+      }
+
+      return {
+        ...updatedState,
       };
     }
     case actions.completeTodo: {
+      const updatedTodos = state.todoList.map((todo) => {
+        if (todo.id == action.id) {
+          return { ...todo, isCompleted: true };
+        }
+        return todo;
+      });
+
       return {
         ...state,
+        todoList: [...updatedTodos],
       };
     }
     case actions.revertTodo: {
-      return {
+      const updatedTodos = state.todoList.map((todo) => {
+        if (todo.id == action.editedTodo.id) {
+          return { ...action.editedTodo };
+        }
+        return todo;
+      });
+
+      const updatedState = {
+        /// unsure if destructing this correctly...
         ...state,
+        todoList: [...updatedTodos],
       };
+
+      if (action.error) {
+        updatedState.errorMessage = action.error.message;
+      }
+      break;
     }
+
     case actions.clearError: {
       return {
         ...state,
+        errorMessage: '',
       };
     }
   }
 }
 
-export { initialState, actions };
+export { initialState, actions, reducer };

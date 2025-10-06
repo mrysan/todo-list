@@ -39,6 +39,7 @@ function App() {
           throw Error(resp.status); // resp.message does not exist
         }
         const response = await resp.json();
+        /** Moved to to reducer loadTodos */
         const records = response.records.map((record) => {
           const todo = {
             id: record.id,
@@ -85,6 +86,7 @@ function App() {
       if (!resp.ok) {
         throw Error(resp.status);
       }
+
       const { records } = await resp.json();
 
       const savedTodo = {
