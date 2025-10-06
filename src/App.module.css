@@ -1,0 +1,33 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  /* height: 50vh; set to half the page */
+  align-items: center;
+  margin: 0 auto;
+}
+
+.error {
+  justify-content: space-between;
+  display: flex;
+  border: 3px solid red;
+  align-content: center;
+  padding: 2px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: red;
+}
+
+.header {
+  font-family: 'Montserrat', sans-serif;
+  color: #2d2d2d;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  align-content: center;
+  margin: 0 auto;
+}
+
+.header > img {
+  width: 45px;
+}
