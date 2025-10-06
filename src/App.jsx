@@ -14,10 +14,6 @@ const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
 function App() {
   const [todoState, dispatch] = useReducer(todosReducer, initialTodosState);
-  const [todoList, setTodoList] = useState([]);
-  const [isLoading, setIsloading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
   const [sortField, setSortField] = useState('createdTime');
   const [sortDirection, setSortDirection] = useState('asc');
   const [queryString, setQueryString] = useState('');
@@ -33,7 +29,7 @@ function App() {
 
   useEffect(() => {
     const fetchTodos = async () => {
-      dispatch({ type: todoActions.fetchTodos }); //replaces: setIsloading(true);
+      dispatch({ type: todoActions.fetchTodos });
       const options = {
         method: 'GET',
         headers: { Authorization: token },
@@ -134,7 +130,7 @@ function App() {
         error: error,
       });
     } finally {
-      dispatch({ type: todoActions.endRequest }); //setIsSaving(false);
+      dispatch({ type: todoActions.endRequest });
     }
   };
 
