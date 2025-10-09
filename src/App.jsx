@@ -1,10 +1,10 @@
 import './App.css';
 import styles from './App.module.css';
-import TodoList from './features/TodoList/TodoList.jsx';
-import TodoForm from './features/TodoForm.jsx';
-import TodosViewForm from './features/TodosViewForm.jsx';
+import { Routes, Route } from 'react-router';
 import TodosPage from './pages/TodosPage.jsx';
 import Header from './shared/Header.jsx';
+import About from './pages/About.jsx';
+import NotFound from './pages/NotFound.jsx';
 import { useState, useEffect, useCallback, useReducer } from 'react';
 import {
   reducer as todosReducer,
@@ -187,23 +187,29 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <Header title={'Todo List'} />
-
-      <div className={styles.todoComponents}>
-        <TodosPage
-          todoState={todoState}
-          sortField={sortField}
-          setSortField={setSortField}
-          sortDirection={sortDirection}
-          setSortDirection={setSortDirection}
-          queryString={queryString}
-          setQueryString={setQueryString}
-          completeTodo={completeTodo}
-          updateTodo={updateTodo}
-          addTodo={addTodo}
-          clearErrorMessage={clearErrorMessage}
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <TodosPage
+              todoState={todoState}
+              sortField={sortField}
+              setSortField={setSortField}
+              sortDirection={sortDirection}
+              setSortDirection={setSortDirection}
+              queryString={queryString}
+              setQueryString={setQueryString}
+              completeTodo={completeTodo}
+              updateTodo={updateTodo}
+              addTodo={addTodo}
+              clearErrorMessage={clearErrorMessage}
+            />
+          }
         />
-      </div>
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

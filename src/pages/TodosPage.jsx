@@ -18,33 +18,35 @@ function TodosPage({
 }) {
   return (
     <>
-      <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
+      <div className={styles.todoComponents}>
+        <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
 
-      <TodoList
-        todoList={todoState.todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-        isLoading={todoState.isLoading}
-      />
+        <TodoList
+          todoList={todoState.todoList}
+          onCompleteTodo={completeTodo}
+          onUpdateTodo={updateTodo}
+          isLoading={todoState.isLoading}
+        />
 
-      {todoState.errorMessage.length > 0 ? (
-        <div className={styles.error}>
-          <p>{todoState.errorMessage}</p>
-          <button type="button" onClick={clearErrorMessage}>
-            Dismiss
-          </button>
-        </div>
-      ) : null}
+        {todoState.errorMessage.length > 0 ? (
+          <div className={styles.error}>
+            <p>{todoState.errorMessage}</p>
+            <button type="button" onClick={clearErrorMessage}>
+              Dismiss
+            </button>
+          </div>
+        ) : null}
 
-      <hr />
-      <TodosViewForm
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        sortField={sortField}
-        setSortField={setSortField}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+        <hr />
+        <TodosViewForm
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
+          sortField={sortField}
+          setSortField={setSortField}
+          queryString={queryString}
+          setQueryString={setQueryString}
+        />
+      </div>
     </>
   );
 }
