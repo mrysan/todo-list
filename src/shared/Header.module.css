@@ -1,37 +1,44 @@
-/* remove bullet and extra space from list item  */
-.itemList {
-  padding: 0px;
-  list-style-type: none;
-  margin-left: 0px;
-}
-
-.paginationControls {
+.header {
   display: grid;
-  justify-items: center;
   align-items: center;
+  width: 100%;
   grid-template-columns: 1fr 2fr 1fr;
 }
 
-.navButton {
-  width: 100px;
-  font-family: 'Roboto', sans-serif;
-  border: solid transparent;
-  border-radius: 12px;
-  border: 1px;
-  color: #fdfdfe;
-  background-color: #ff6b6b;
-  cursor: default;
-  font-size: 18px;
-  letter-spacing: 0.5px;
-  padding: 7px;
-  margin: 3px;
-  text-decoration: none;
-  margin: 0px;
+.title {
+  font-family: 'Montserrat', sans-serif;
+  color: #2d2d2d;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  align-content: center;
+  margin: 0 auto;
 }
 
-.navButton:disabled {
+.title > img {
+  width: 45px;
+}
+
+.navigation {
+  /* width: 500px; */
+  /* height: 50vh; set to half the page */
+
+  margin: 0 auto;
+}
+
+.active {
+  font-family: 'Roboto', sans-serif;
+  border: solid transparent;
+  border-radius: 16px;
+  border: 1px;
+  color: #fdfdfe;
   background-color: #ff6b6b82;
   cursor: not-allowed;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 10px;
+  margin: 3px;
+  text-decoration: none;
 }
 
 .inactive {

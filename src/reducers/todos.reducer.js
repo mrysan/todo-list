@@ -22,6 +22,8 @@ const actions = {
   revertTodo: 'revertTodo',
   //action on Dismiss Error button
   clearError: 'clearError',
+  // sets sorting to asc or desc
+  setSortDirection: 'setSortDirection',
 };
 
 function reducer(state = initialState, action) {
