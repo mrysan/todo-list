@@ -15,6 +15,8 @@ function TodosPage({
   updateTodo,
   addTodo,
   clearErrorMessage,
+  currentPage,
+  totalPages,
 }) {
   return (
     <>
@@ -26,6 +28,8 @@ function TodosPage({
           onCompleteTodo={completeTodo}
           onUpdateTodo={updateTodo}
           isLoading={todoState.isLoading}
+          currentPage={currentPage}
+          totalPages={totalPages}
         />
 
         {todoState.errorMessage.length > 0 ? (

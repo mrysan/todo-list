@@ -5,7 +5,10 @@ function NotFound() {
     <div className={styles.aboutContainer}>
       <p>Page Not Found!</p>
       <nav>
-        <NavLink to={'/'}>Return Home</NavLink>
+        <h2>
+          {' '}
+          <NavLink to={'/'}>Return Home</NavLink>
+        </h2>
       </nav>
     </div>
   );
