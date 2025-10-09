@@ -3,6 +3,8 @@ import styles from './App.module.css';
 import TodoList from './features/TodoList/TodoList.jsx';
 import TodoForm from './features/TodoForm.jsx';
 import TodosViewForm from './features/TodosViewForm.jsx';
+import TodosPage from './pages/TodosPage.jsx';
+import Header from './shared/Header.jsx';
 import { useState, useEffect, useCallback, useReducer } from 'react';
 import {
   reducer as todosReducer,
@@ -185,37 +187,21 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <div className={styles.header}>
-        <img src="./public/favicon.svg" alt="todo-icon" />
-        <h1>Todo List</h1>
-      </div>
+      <Header title={'Todo List'} />
+
       <div className={styles.todoComponents}>
-        <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
-
-        <TodoList
-          todoList={todoState.todoList}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-          isLoading={todoState.isLoading}
-        />
-
-        {todoState.errorMessage.length > 0 ? (
-          <div className={styles.error}>
-            <p>{todoState.errorMessage}</p>
-            <button type="button" onClick={clearErrorMessage}>
-              Dismiss
-            </button>
-          </div>
-        ) : null}
-
-        <hr />
-        <TodosViewForm
-          sortDirection={sortDirection}
-          setSortDirection={setSortDirection}
+        <TodosPage
+          todoState={todoState}
           sortField={sortField}
           setSortField={setSortField}
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
           queryString={queryString}
           setQueryString={setQueryString}
+          completeTodo={completeTodo}
+          updateTodo={updateTodo}
+          addTodo={addTodo}
+          clearErrorMessage={clearErrorMessage}
         />
       </div>
     </div>
