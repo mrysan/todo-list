@@ -1,6 +1,6 @@
 import TodoListItem from './TodoListItem.jsx';
 import styles from './TodoList.module.css';
-import { useSearchParams } from 'react-router';
+import { useSearchParams, useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
@@ -11,17 +11,25 @@ function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
   });
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const itemsPerPage = 5;
+  const itemsPerPage = 15;
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const indexOfFirstTodo = (currentPage - 1) * itemsPerPage;
   const indexOfLastTodo = indexOfFirstTodo + itemsPerPage;
   const totalPages = Math.ceil(
     Object.keys(filteredTodoList).length / itemsPerPage
   );
+  const navigate = useNavigate();
 
+  // redirect to home page if invalid page # is entered
   useEffect(() => {
-    [currentPage];
-  });
+    // only fire once pages are loaded
+    if (totalPages > 0) {
+      if (isNaN(currentPage) || currentPage < 1 || currentPage > currentPage) {
+        setSearchParams(1);
+        navigate('/');
+      }
+    }
+  }, [currentPage, totalPages, navigate, setSearchParams]);
 
   const handlePreviousPage = () => {
     setSearchParams(`?page=${currentPage - 1}`);
@@ -53,13 +61,21 @@ function TodoList({ todoList, onCompleteTodo, onUpdateTodo, isLoading }) {
       )}
 
       <div className={styles.paginationControls}>
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={styles.navButton}
+        >
           Previous
         </button>
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={styles.navButton}
+        >
           Next
         </button>
       </div>

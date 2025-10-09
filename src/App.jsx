@@ -52,7 +52,7 @@ function App() {
       }
     };
     fetchTodos();
-  }, [sortField, sortDirection, queryString]); // useEffect
+  }, [sortField, sortDirection, queryString, encodeUrl]); // useEffect
 
   const addTodo = async (newTodo) => {
     const payload = {

@@ -4,3 +4,45 @@
   list-style-type: none;
   margin-left: 0px;
 }
+
+.paginationControls {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.navButton {
+  width: 100px;
+  font-family: 'Roboto', sans-serif;
+  border: solid transparent;
+  border-radius: 12px;
+  border: 1px;
+  color: #fdfdfe;
+  background-color: #ff6b6b;
+  cursor: default;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 7px;
+  margin: 3px;
+  text-decoration: none;
+  margin: 0px;
+}
+
+.navButton:disabled {
+  background-color: #ff6b6b82;
+  cursor: not-allowed;
+}
+
+.inactive {
+  font-family: 'Roboto', sans-serif;
+  border: solid transparent;
+  border-radius: 16px;
+  color: #fffdf6;
+  background-color: #ff6b6b;
+  cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 10px;
+  text-decoration: none;
+}
