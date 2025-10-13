@@ -1,8 +1,10 @@
 import './App.css';
 import styles from './App.module.css';
-import TodoList from './features/TodoList/TodoList.jsx';
-import TodoForm from './features/TodoForm.jsx';
-import TodosViewForm from './features/TodosViewForm.jsx';
+import { Routes, Route } from 'react-router';
+import TodosPage from './pages/TodosPage.jsx';
+import Header from './shared/Header.jsx';
+import About from './pages/About.jsx';
+import NotFound from './pages/NotFound.jsx';
 import { useState, useEffect, useCallback, useReducer } from 'react';
 import {
   reducer as todosReducer,
@@ -50,7 +52,7 @@ function App() {
       }
     };
     fetchTodos();
-  }, [sortField, sortDirection, queryString]); // useEffect
+  }, [sortField, sortDirection, queryString, encodeUrl]); // useEffect
 
   const addTodo = async (newTodo) => {
     const payload = {
@@ -185,39 +187,29 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <div className={styles.header}>
-        <img src="./public/favicon.svg" alt="todo-icon" />
-        <h1>Todo List</h1>
-      </div>
-      <div className={styles.todoComponents}>
-        <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
-
-        <TodoList
-          todoList={todoState.todoList}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-          isLoading={todoState.isLoading}
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <TodosPage
+              todoState={todoState}
+              sortField={sortField}
+              setSortField={setSortField}
+              sortDirection={sortDirection}
+              setSortDirection={setSortDirection}
+              queryString={queryString}
+              setQueryString={setQueryString}
+              completeTodo={completeTodo}
+              updateTodo={updateTodo}
+              addTodo={addTodo}
+              clearErrorMessage={clearErrorMessage}
+            />
+          }
         />
-
-        {todoState.errorMessage.length > 0 ? (
-          <div className={styles.error}>
-            <p>{todoState.errorMessage}</p>
-            <button type="button" onClick={clearErrorMessage}>
-              Dismiss
-            </button>
-          </div>
-        ) : null}
-
-        <hr />
-        <TodosViewForm
-          sortDirection={sortDirection}
-          setSortDirection={setSortDirection}
-          sortField={sortField}
-          setSortField={setSortField}
-          queryString={queryString}
-          setQueryString={setQueryString}
-        />
-      </div>
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
